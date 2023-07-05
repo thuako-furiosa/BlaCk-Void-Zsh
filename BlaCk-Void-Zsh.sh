@@ -17,7 +17,7 @@ YUM_RELEASE="rhel\|CentOS\|RED\|Fedora"
 
 ARH_PACKAGE_NAME=(zsh curl git w3m wmctrl ack tmux xdotool python-pip powerline)
 DEB_PACKAGE_NAME=(zsh curl git w3m-img wmctrl ack tmux xdotool python3-pip powerline)
-YUM_PACKAGE_NAME=(zsh curl git w3m-img wmctrl ack tmux xdotool python3-pip powerline)
+YUM_PACKAGE_NAME=(zsh curl git wmctrl ack tmux xdotool python3-pip powerline)
 MAC_PACKAGE_NAME=(zsh curl git socat w3m wmctrl ack tmux xdotool python3  xquartz)
 BSD_PACKAGE_NAME=(zsh curl git thefuck w3m-img xdotool p5-ack tmux xdotool py37-pip py37-powerline-status)
 PIP_PACKAGE_NAME=(thefuck)
@@ -28,32 +28,32 @@ pacapt_install()
 {
   if ! [ -x "$(command -v pacapt)" ]; then
     echo "Universal Package Manager(icy/pacapt) Download && Install(need sudo permission)"
-    sudo curl https://github.com/icy/pacapt/raw/ng/pacapt -Lo $PACAPT
-    sudo chmod 755 $PACAPT
-    sudo ln -sv $PACAPT /usr/local/bin/pacman || true
+     curl https://github.com/icy/pacapt/raw/ng/pacapt -Lo $PACAPT
+     chmod 755 $PACAPT
+     ln -sv $PACAPT /usr/local/bin/pacman || true
     PACAPT_INSTALLED=false
   fi
-  sudo pacapt -Sy
+   pacapt -Sy
 }
 
 arh_install()
 {
-  sudo pacapt -S --noconfirm  "${ARH_PACKAGE_NAME[@]}"
+   pacapt -S --noconfirm  "${ARH_PACKAGE_NAME[@]}"
 }
 deb_install()
 {
-  sudo pacapt -S --noconfirm "${DEB_PACKAGE_NAME[@]}"
+   pacapt -S --noconfirm "${DEB_PACKAGE_NAME[@]}"
 }
 yum_install()
 {
-  sudo pacapt -S --noconfirm "${YUM_PACKAGE_NAME[@]}"
+   pacapt -S --noconfirm "${YUM_PACKAGE_NAME[@]}"
 }
 mac_install()
 {
   brew update
   brew install "${MAC_PACKAGE_NAME[@]}"
 
-  sudo pip3 install powerline-status
+   pip3 install powerline-status
 }
 bsd_install()
 {
@@ -75,9 +75,9 @@ set_brew()
 pip_install()
 {
   if ! [ -x "$(command -v pip3)" ]; then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo python3
+    curl https://bootstrap.pypa.io/get-pip.py |  python3
   fi
-  sudo pip3 install "${PIP_PACKAGE_NAME[@]}"
+   pip3 install "${PIP_PACKAGE_NAME[@]}"
 }
 etc_install()
 {
@@ -94,7 +94,6 @@ etc_install()
 
 if   [[ "$OSTYPE" == "linux-gnu" ]]; then
   RELEASE=$(cat /etc/*release)
-  pacapt_install
 
   ##ARH Package
   if   echo "$RELEASE" | grep ^NAME    | grep Manjaro; then
@@ -159,7 +158,7 @@ fi
 etc_install
 
 if [[ "$PACAPT_INSTALLED" == false ]]; then
-  sudo rm -rf "$PACAPT"
+   rm -rf "$PACAPT"
 fi
 
 echo "--------------------"
