@@ -38,7 +38,9 @@ font_install()
 
 necessary()
 {
+	echo $OSTYPE 
     if   [[ "$OSTYPE" == "linux-gnu" ]]; then
+	    
         local fontDir="/usr/share/fonts/"
     elif [[ "$OSTYPE" == "darwin"*  ]] ; then
         local fontDir="/Library/Fonts/"
